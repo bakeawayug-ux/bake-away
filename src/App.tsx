@@ -95,7 +95,6 @@ function Pages() {
           </Routes>
         </ErrorBoundary>
       </SheetProvider>
-      <UpdateBanner />
     </div>
   );
 }
@@ -248,6 +247,8 @@ export default function App() {
   return (
     <NoticeProvider>
       <ConfirmProvider>{local ? <WithRecords store={local} /> : <CloudApp />}</ConfirmProvider>
+      {/* Here, outside the records, so a new version is offered on the sign-in page too. */}
+      <UpdateBanner />
     </NoticeProvider>
   );
 }
