@@ -118,6 +118,26 @@ export function inPeriod(date: string | undefined, p: { from: string; to: string
   return true;
 }
 
+/** Every month from one date to another, oldest first: { key: 'YYYY-MM', label: 'Nov 2026' }. */
+export function monthsBetween(from: string, to: string): { key: string; label: string }[] {
+  if (!isYmd(from) || !isYmd(to) || from > to) return [];
+  const out: { key: string; label: string }[] = [];
+  let y = Number(from.slice(0, 4));
+  let m = Number(from.slice(5, 7)) - 1;
+  const endKey = to.slice(0, 7);
+  for (let guard = 0; guard < 600; guard++) {
+    const key = `${y}-${pad(m + 1)}`;
+    out.push({ key, label: `${MONTHS[m]} ${y}` });
+    if (key >= endKey) break;
+    m += 1;
+    if (m > 11) {
+      m = 0;
+      y += 1;
+    }
+  }
+  return out;
+}
+
 /** The last n months, oldest first, as { key: 'YYYY-MM', label: 'Nov' }. */
 export function lastMonths(n: number, today = todayYmd()): { key: string; label: string }[] {
   const t = fromYmd(today);

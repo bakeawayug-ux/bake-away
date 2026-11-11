@@ -429,7 +429,15 @@ export function HardwareReports() {
 
   return (
     <>
-      <PageHead eyebrow={range.label} title="Reports" />
+      <PageHead
+        eyebrow={range.label}
+        title="Reports"
+        action={
+          <Link to="/hardware/report" className="btn btn-soft btn-sm">
+            PDF report
+          </Link>
+        }
+      />
       <PeriodPicker state={period} />
 
       <SectionTitle>Profit</SectionTitle>

@@ -17,6 +17,7 @@ import type { Section } from './lib/types';
 import { onUpdateReady } from './lib/update';
 import { BakeOverview, Orders } from './pages/BakePages';
 import { BakeReports, Products } from './pages/BakeProfit';
+import { BusinessReportPage } from './pages/BusinessReport';
 import { HardwareOverview, HardwareReports, MoneyInvested, Sales, Stock, StockIn } from './pages/HardwarePages';
 import { Home } from './pages/Home';
 import { ManualPage } from './pages/Manual';
@@ -82,6 +83,7 @@ function Pages() {
             <Route path="/bake/products" element={page('bake', <Products />)} />
             <Route path="/bake/reports" element={page('bake', <BakeReports />)} />
             <Route path="/bake/notes" element={page('bake', <Notes section="bake" />)} />
+            <Route path="/bake/report" element={page('bake', <BusinessReportPage section="bake" />)} />
             <Route path="/hardware" element={page('hardware', <HardwareOverview />)} />
             <Route path="/hardware/stock" element={page('hardware', <Stock />)} />
             <Route path="/hardware/sales" element={page('hardware', <Sales />)} />
@@ -91,6 +93,7 @@ function Pages() {
             <Route path="/hardware/money" element={page('hardware', <MoneyInvested />)} />
             <Route path="/hardware/reports" element={page('hardware', <HardwareReports />)} />
             <Route path="/hardware/notes" element={page('hardware', <Notes section="hardware" />)} />
+            <Route path="/hardware/report" element={page('hardware', <BusinessReportPage section="hardware" />)} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/help" element={<ManualPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />

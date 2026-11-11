@@ -1,6 +1,6 @@
 # Bake Away user manual
 
-Last updated: 11 November 2026 (the PIN)
+Last updated: 11 November 2026 (PDF reports)
 
 This app keeps the records of two businesses in one place: **Bake Away** (orders, customers, baking costs, profit) and **Hardware** (stock, sales, money invested). It works on the iPhone like an app and on a laptop in the browser.
 
@@ -82,6 +82,17 @@ Add, rename or delete products freely. Orders already saved keep their own items
 
 > Profit comes from what you sell, not from an ingredient on its own. So the app shows each ingredient as a cost (how much of your sales it eats) and each product as a profit.
 
+### PDF report
+
+**More > PDF report** makes a report of **Bake Away only**, to keep or to send. It never shows anything from the hardware shop.
+
+1. Choose the period: this month, last month, this year, last year, all time, or your own dates.
+2. Tick what to include: **Month by month**, and **Who owes you**.
+3. Look through the preview on the page.
+4. Tap **Share PDF**. The iPhone's share sheet opens: send it on WhatsApp or Mail, or **Save to Files**. To print, choose **Print** there. On a laptop the button is **Download PDF**, and there is also **Print**.
+
+The report has: money in, money spent, profit and what is owed; money in by how it was paid; money out by kind; each ingredient and how much of the money received it took; what each product earned; the orders; the best customers; the orders not yet fully paid; and the months. **Excel** makes the same report as a file for Excel or Google Sheets.
+
 ### Notes
 
 For ideas, reminders and future bookings that are not orders yet. A note can have a **day**; it then shows on the Overview when that day is near. **Pin** a note to keep it on Home. Tap the circle to mark it done.
@@ -125,6 +136,12 @@ If you sell more than the records show in stock, the app warns you but still sav
 - **Where the shop stands today**: stock value, what customers owe you, what you owe suppliers, your money invested.
 - **Best sellers** and expenses by kind, and files to download.
 
+### PDF report
+
+**More > PDF report** makes a report of **the hardware shop only**. It never shows anything from Bake Away. Choose the period and what to include, look through the preview, then **Share PDF** (on the iPhone) or **Download PDF** (on a laptop).
+
+The report has: money in (what customers paid), money out (paid to suppliers and expenses), profit, stock value; the profit worked out step by step; cash in and out, with your own money put in or taken out shown apart; how customers paid; expenses by kind; best sellers; where the shop stands today; stock running low; customers who owe you and suppliers you owe; and the months.
+
 > How cost is worked out: an item's cost is the **average** of everything you have ever bought of it. Stock value is the number in stock times that average.
 
 ## Settings
@@ -163,6 +180,8 @@ If this phone used the app before the PIN, open **Settings > Your records** and 
 
 ## What's new
 
+- 11 November 2026: a **PDF report** for each business, kept separate: Bake Away's report never shows the shop, and the shop's report never shows Bake Away.
+- 11 November 2026: the Bake Away cupcake now sits faintly in the background, and a soft glow shows where you tap.
 - 11 November 2026: the app now opens with a **6-digit PIN** only. Google and email sign-in were removed.
 - 11 November 2026: the same records on the iPhone and the laptop.
 - 11 November 2026: first version. Bake Away (orders, customers, expenses by ingredient, products, profit and reports, notes) and Hardware (stock, sales, stock in, money invested, reports).

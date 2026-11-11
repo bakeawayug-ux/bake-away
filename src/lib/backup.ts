@@ -81,7 +81,7 @@ export function toCsv(headers: string[], rows: unknown[][]): string {
 }
 
 /** Hands a file to the person: the iPhone share sheet (Save to Files, WhatsApp...) where there is one, a download elsewhere. */
-export async function giveFile(name: string, content: string, type: string): Promise<void> {
+export async function giveFile(name: string, content: string | Blob, type: string): Promise<void> {
   const file = new File([content], name, { type });
   const nav = navigator as Navigator & { canShare?: (d: { files: File[] }) => boolean };
   const touch = typeof matchMedia !== 'undefined' && matchMedia('(pointer: coarse)').matches;

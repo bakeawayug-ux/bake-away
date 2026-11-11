@@ -148,7 +148,15 @@ export function BakeReports() {
 
   return (
     <>
-      <PageHead eyebrow={range.label} title="Profit and reports" />
+      <PageHead
+        eyebrow={range.label}
+        title="Profit and reports"
+        action={
+          <Link to="/bake/report" className="btn btn-soft btn-sm">
+            PDF report
+          </Link>
+        }
+      />
       <PeriodPicker state={period} />
 
       <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-3">

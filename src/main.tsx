@@ -11,6 +11,23 @@ createRoot(document.getElementById('root')!).render(
   </StrictMode>,
 );
 
+// A soft caramel glow wherever a finger or the mouse presses. Skipped when the phone asks for less motion.
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  window.addEventListener(
+    'pointerdown',
+    (e) => {
+      const glow = document.createElement('span');
+      glow.className = 'tap-glow';
+      glow.style.left = `${e.clientX}px`;
+      glow.style.top = `${e.clientY}px`;
+      document.body.appendChild(glow);
+      glow.addEventListener('animationend', () => glow.remove(), { once: true });
+      setTimeout(() => glow.remove(), 1000);
+    },
+    { passive: true, capture: true },
+  );
+}
+
 // The service worker keeps a copy of the app on the device, so it opens with no signal.
 if (import.meta.env.PROD) {
   const update = registerSW({

@@ -7,6 +7,7 @@ import {
   CakeSlice,
   ChartColumn,
   Cookie,
+  FileText,
   HandCoins,
   LayoutDashboard,
   PackagePlus,
@@ -55,6 +56,7 @@ export const SECTIONS: Record<Section, SectionDef> = {
       { to: '/bake/expenses', label: 'Expenses', icon: Receipt, tab: true },
       { to: '/bake/products', label: 'Products', icon: Cookie },
       { to: '/bake/reports', label: 'Profit and reports', icon: ChartColumn },
+      { to: '/bake/report', label: 'PDF report', icon: FileText },
       { to: '/bake/notes', label: 'Notes', icon: StickyNote },
     ],
     quick: [
@@ -77,6 +79,7 @@ export const SECTIONS: Record<Section, SectionDef> = {
       { to: '/hardware/expenses', label: 'Expenses', icon: Receipt },
       { to: '/hardware/money', label: 'Money invested', icon: Wallet },
       { to: '/hardware/reports', label: 'Reports', icon: ChartColumn },
+      { to: '/hardware/report', label: 'PDF report', icon: FileText },
       { to: '/hardware/notes', label: 'Notes', icon: StickyNote },
     ],
     quick: [
