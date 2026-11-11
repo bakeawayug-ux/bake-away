@@ -1,6 +1,6 @@
 # Bake Away user manual
 
-Last updated: 11 November 2026
+Last updated: 11 November 2026 (sign-in and shared records)
 
 This app keeps the records of two businesses in one place: **Bake Away** (orders, customers, baking costs, profit) and **Hardware** (stock, sales, money invested). It works on the iPhone like an app and on a laptop in the browser.
 
@@ -133,13 +133,19 @@ If you sell more than the records show in stock, the app warns you but still sav
 - **Your records**: **Download a backup** (one file with everything), **Restore from a backup**, and **Delete all records**.
 - **Lists**: change the ingredients, kinds of expense, ways of paying, item groups and units to suit you. Tap the x to remove one, or type your own and tap **Add**. Removing a name does not change records already saved with it.
 
-## Where your records are kept
+## Signing in and where your records are kept
 
-The line at the top of Home tells you:
+The app opens on a **Sign in** page. Use the email and password set up for you. Once signed in, it stays signed in on that phone or laptop until you choose **Settings > Sign out**.
 
-- **Kept on this device**: the records live only in this browser on this phone or laptop. Other devices do not see them. **Download a backup often**: clearing the browser's data or losing the phone loses the records.
-- **Saved to the cloud**: you are signed in, and the same records show on every device you sign in on. With no signal you can keep working; the changes are sent when the connection returns.
+- Your records are kept in your own account in the cloud. The **same records show on every device** you sign in on: save an order on the iPhone and it is on the laptop a moment later.
+- **No signal?** Keep working. The line at the top of Home says "No connection: changes wait on this device", and the changes are sent by themselves when the connection returns.
+- **Forgot the password?** On the Sign in page, type your email and tap **Forgot password**. A message with a link to set a new one arrives by email.
+- **Records saved before signing in** (on a phone that used the app earlier) are not lost: after signing in, open **Settings > Your records** and tap **Bring them into my account**.
+- Nobody else can make an account or see your records.
+
+> Keep downloading a backup now and then (**Settings > Download a backup**) and save it somewhere safe, such as Google Drive. It is your own copy if anything ever goes wrong.
 
 ## What's new
 
+- 11 November 2026: sign-in, and the same records on the iPhone and the laptop.
 - 11 November 2026: first version. Bake Away (orders, customers, expenses by ingredient, products, profit and reports, notes) and Hardware (stock, sales, stock in, money invested, reports).

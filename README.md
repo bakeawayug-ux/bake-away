@@ -36,7 +36,9 @@ Nothing private is in the repository: no passwords, no keys, no records.
 
 ## Cloud sync: the same records on the iPhone and the laptop
 
-Out of the box each device keeps its own records. To share them, the app uses a free Firebase project (Spark plan: no card needed).
+**Done on 11 Nov 2026** for the published app: project `bake-away-e1a96` (owner bakeawayug@gmail.com), database in africa-south1. The steps below are kept for reference, for example to move to a new project. `npm run dev` stays on browser-only records on purpose; only the published app uses the cloud.
+
+The app uses a free Firebase project (Spark plan: no card needed).
 
 1. Go to https://console.firebase.google.com, signed in with the Google account that should own the records, and **Add project** (Google Analytics is not needed).
 2. **Build > Authentication > Get started > Email/Password: Enable.** Under **Users**, **Add user** with the owner's email and a strong password. Under **Settings > User actions**, untick **Enable create (sign-up)** so nobody else can make an account.
