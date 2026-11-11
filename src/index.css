@@ -162,6 +162,18 @@ input[type="date"].input::-webkit-date-and-time-value {
     opacity: 1;
   }
 }
+@keyframes pin-shake {
+  0%,
+  100% {
+    transform: none;
+  }
+  25% {
+    transform: translateX(-8px);
+  }
+  75% {
+    transform: translateX(8px);
+  }
+}
 @keyframes fade-in {
   from {
     opacity: 0;

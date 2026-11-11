@@ -1,8 +1,9 @@
-// Creates the test sign-in in the local Auth EMULATOR (never the real cloud), for "npm run dev:emulator".
+// Creates the test Bake Away account in the local Auth EMULATOR (never the real cloud), for
+// "npm run dev:emulator". The app opens it with the PIN, which is the account's password.
 // These are throwaway test values that exist only inside the emulator on this computer.
 const AUTH = 'http://127.0.0.1:9099';
-export const TEST_EMAIL = 'evelyn.test@bakeaway.test';
-export const TEST_PASSWORD = 'cupcake-test-2026';
+export const TEST_EMAIL = 'evelyn.test@bakeaway.test'; // must match ownerEmail in src/firebase-config.ts
+export const TEST_PASSWORD = '246810'; // the test PIN
 
 // Hard check: refuse to talk to anything that is not the local emulator.
 const probe = await fetch(`${AUTH}/emulator/v1/projects/demo-bake-away/config`).catch(() => null);

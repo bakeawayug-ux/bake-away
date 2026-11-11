@@ -27,6 +27,13 @@ export const firebaseConfig: FirebaseConfig | null = {
 export const useEmulator = import.meta.env.DEV && import.meta.env.VITE_EMULATOR === '1';
 
 /**
+ * The one Bake Away account. The app opens it with the PIN (the PIN is its password), so nobody
+ * types this email. It is a real mailbox so "Forgot PIN" can send a reset link. Not a secret:
+ * it is visible in the published app anyway; the PIN is the secret.
+ */
+export const ownerEmail = useEmulator ? 'evelyn.test@bakeaway.test' : 'bakeawayug@gmail.com';
+
+/**
  * Which records the app uses:
  * - the published app: Evelyn's real records in the cloud;
  * - "npm run dev:emulator": the local test copy;

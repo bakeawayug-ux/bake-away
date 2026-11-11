@@ -1,6 +1,6 @@
 # Bake Away user manual
 
-Last updated: 11 November 2026 (Google sign-in)
+Last updated: 11 November 2026 (the PIN)
 
 This app keeps the records of two businesses in one place: **Bake Away** (orders, customers, baking costs, profit) and **Hardware** (stock, sales, money invested). It works on the iPhone like an app and on a laptop in the browser.
 
@@ -133,29 +133,36 @@ If you sell more than the records show in stock, the app warns you but still sav
 - **Your records**: **Download a backup** (one file with everything), **Restore from a backup**, and **Delete all records**.
 - **Lists**: change the ingredients, kinds of expense, ways of paying, item groups and units to suit you. Tap the x to remove one, or type your own and tap **Add**. Removing a name does not change records already saved with it.
 
-## Signing in and where your records are kept
+## The PIN and where your records are kept
 
-The app opens on a **Sign in** page. There are two ways in:
+The app opens on a number pad. Type the **6-digit Bake Away PIN** and it opens; there is nothing else to sign in to. There is one set of Bake Away records, and only the PIN opens it.
 
-- **Continue with Google**: tap it and choose the **Bake Away Google account** (bakeawayug@gmail.com) in the Google window. Other Google accounts are refused.
-- **Email and password**: the ones set up for you, then **Sign in with email**.
-
-Once signed in, it stays signed in on that phone or laptop until you choose **Settings > Sign out**.
-
-> After the first sign-in with Google, use Google from then on. Google takes over that email, so the old password may stop working. To have a password again, type the email on the Sign in page and tap **Forgot password**.
-
-> If the Google window does not open (some phones block it inside a Home Screen app), the page says so: sign in with the email and password instead.
-
-- Your records are kept in your own account in the cloud. The **same records show on every device** you sign in on: save an order on the iPhone and it is on the laptop a moment later.
+- **The first time on a phone or computer** the PIN needs the internet. After that it opens even with no signal.
+- The app **locks itself** when it starts and after 5 minutes in the background. To lock it straight away: **Settings > PIN > Lock now**.
+- **The same records on every device**: type the PIN on the iPhone and on the laptop, and both show the same orders and stock. Save something on one and it is on the other a moment later.
 - **No signal?** Keep working. The line at the top of Home says "No connection: changes wait on this device", and the changes are sent by themselves when the connection returns.
-- **Forgot the password?** On the Sign in page, type your email and tap **Forgot password**. A message with a link to set a new one arrives by email.
-- **Records saved before signing in** (on a phone that used the app earlier) are not lost: after signing in, open **Settings > Your records** and tap **Bring them into my account**.
-- Nobody else can make an account or see your records.
+- **Wrong PIN:** after 5 wrong tries the pad waits before letting you try again, longer each time.
+
+### Changing the PIN
+
+**Settings > PIN > Change the PIN**: type the current PIN, then the new one twice, and tap **Change PIN**. It needs the internet. Every other phone or computer then asks for the new PIN.
+
+### Forgot the PIN?
+
+Tap **Forgot PIN?** under the number pad, then **Send the link**. An email arrives at the Bake Away email (bakeawayug@gmail.com). Open the link and type a **new 6-digit PIN** where it asks for the new password. Then go back to the app and use the new PIN.
+
+### A phone you no longer use
+
+**Settings > PIN > Remove from this device**. The records stay safe; that device asks for the PIN again (with the internet) if it is ever opened.
+
+### Records saved before the PIN was set up
+
+If this phone used the app before the PIN, open **Settings > Your records** and tap **Add them to the Bake Away records**.
 
 > Keep downloading a backup now and then (**Settings > Download a backup**) and save it somewhere safe, such as Google Drive. It is your own copy if anything ever goes wrong.
 
 ## What's new
 
-- 11 November 2026: **Continue with Google** on the Sign in page.
-- 11 November 2026: sign-in, and the same records on the iPhone and the laptop.
+- 11 November 2026: the app now opens with a **6-digit PIN** only. Google and email sign-in were removed.
+- 11 November 2026: the same records on the iPhone and the laptop.
 - 11 November 2026: first version. Bake Away (orders, customers, expenses by ingredient, products, profit and reports, notes) and Hardware (stock, sales, stock in, money invested, reports).

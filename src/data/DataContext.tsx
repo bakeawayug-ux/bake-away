@@ -27,7 +27,12 @@ interface DataValue extends Records {
   itemsById: Map<string, Item>;
   levels: Map<string, StockLevel>;
   orderTotalsById: Map<string, OrderTotals>;
+  /** Cloud only: forget the account on this device */
   signOut?: () => void;
+  /** Cloud only: show the PIN screen now */
+  lock?: () => void;
+  /** Cloud only: returns an error message, or '' when the PIN was changed */
+  changePin?: (oldPin: string, newPin: string) => Promise<string>;
 }
 
 const DataContext = createContext<DataValue | null>(null);
@@ -67,7 +72,23 @@ function useOnline(): boolean {
   return online;
 }
 
-export function DataProvider({ store, account = '', signOut, onWriteError, children }: { store: Store; account?: string; signOut?: () => void; onWriteError: (message: string) => void; children: ReactNode }) {
+export function DataProvider({
+  store,
+  account = '',
+  signOut,
+  lock,
+  changePin,
+  onWriteError,
+  children,
+}: {
+  store: Store;
+  account?: string;
+  signOut?: () => void;
+  lock?: () => void;
+  changePin?: (oldPin: string, newPin: string) => Promise<string>;
+  onWriteError: (message: string) => void;
+  children: ReactNode;
+}) {
   const [rows, setRows] = useState<Partial<Record<Col, Row[]>>>({});
   const [infos, setInfos] = useState<Partial<Record<Col, SnapshotInfo>>>({});
   const [loadError, setLoadError] = useState('');
@@ -159,6 +180,6 @@ export function DataProvider({ store, account = '', signOut, onWriteError, child
             ? 'offline'
             : 'saved';
 
-  const value: DataValue = { ...records, ...derived, settings, settingsRow, ready, loadError, sync, storeKind: store.kind, account, today, actions, signOut };
+  const value: DataValue = { ...records, ...derived, settings, settingsRow, ready, loadError, sync, storeKind: store.kind, account, today, actions, signOut, lock, changePin };
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 }

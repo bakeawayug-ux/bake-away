@@ -1,16 +1,17 @@
-// Cloud records: Firebase sign-in (email and password) and Firestore, kept at users/{uid}/{collection}/{id}.
-// firestore.rules lets a signed-in person read and write only their own records.
+// Cloud records: the one Bake Away account, opened with the PIN, and Firestore, kept at
+// users/{uid}/{collection}/{id}. firestore.rules lets only that account read and write them.
 // This file is loaded only when cloud sync is configured, so the device-only app stays small.
 import { initializeApp } from 'firebase/app';
 import {
   connectAuthEmulator,
+  EmailAuthProvider,
   getAuth,
-  GoogleAuthProvider,
   onAuthStateChanged,
+  reauthenticateWithCredential,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
-  signInWithPopup,
   signOut as fbSignOut,
+  updatePassword,
   type User,
 } from 'firebase/auth';
 import {
@@ -23,10 +24,11 @@ import {
   persistentMultipleTabManager,
   writeBatch,
 } from 'firebase/firestore';
-import { cloudConfig, useEmulator } from '../firebase-config';
+import { cloudConfig, ownerEmail, useEmulator } from '../firebase-config';
 import { clean, type Op, type Row, type Store } from './store';
 
 if (!cloudConfig) throw new Error('Cloud sync is not set up.');
+const OWNER_EMAIL = ownerEmail;
 
 const app = initializeApp(cloudConfig);
 const auth = getAuth(app);
@@ -52,53 +54,45 @@ export function watchUser(cb: (user: CloudUser | null) => void): () => void {
   return onAuthStateChanged(auth, (u: User | null) => cb(u ? { uid: u.uid, email: u.email ?? '' } : null));
 }
 
-export async function signIn(email: string, password: string): Promise<void> {
-  await signInWithEmailAndPassword(auth, email.trim(), password);
-}
-
 /**
- * Google sign-in, by pop-up only. The app (github.io) and Firebase's sign-in helper
- * (firebaseapp.com) are on different addresses; the "go to Google's page and come back" method
- * loses its result there because browsers, iPhone Safari most of all, wall off storage between
- * addresses (checked 11 Nov 2026: it came back signed out). The pop-up hands the result straight
- * back, so it works across addresses. If it cannot open, the sign-in page says so and the email
- * and password still work.
- * Only accounts that already exist can sign in (sign-up is switched off in Firebase), so another
- * Google account is refused rather than given an empty account. A Google account with the same
- * Gmail as an existing account opens that same account and its records.
+ * PIN only. There is one Bake Away account (OWNER_EMAIL) and the PIN is its password, so the PIN is
+ * checked by Firebase's servers (which also slow down guessing), not just by the screen. The
+ * records stay protected by firestore.rules even from someone who has the app's address.
+ * Firebase needs at least 6 characters, hence a 6-digit PIN.
  */
-export async function signInWithGoogle(): Promise<void> {
-  const provider = new GoogleAuthProvider();
-  provider.setCustomParameters({ prompt: 'select_account' });
-  await signInWithPopup(auth, provider);
+export async function unlockWithPin(pin: string): Promise<void> {
+  await signInWithEmailAndPassword(auth, OWNER_EMAIL, pin);
 }
 
-export async function resetPassword(email: string): Promise<void> {
-  await sendPasswordResetEmail(auth, email.trim());
+/** Changes the PIN everywhere. Other devices are signed out by Firebase and ask for the new PIN. */
+export async function changePin(oldPin: string, newPin: string): Promise<void> {
+  const user = auth.currentUser;
+  if (!user) throw Object.assign(new Error('Not unlocked'), { code: 'auth/no-current-user' });
+  await reauthenticateWithCredential(user, EmailAuthProvider.credential(OWNER_EMAIL, oldPin));
+  await updatePassword(user, newPin);
 }
 
-export async function signOut(): Promise<void> {
+/** Forgotten PIN: Firebase emails a link to the Bake Away email to set a new one. */
+export async function sendPinReset(): Promise<void> {
+  await sendPasswordResetEmail(auth, OWNER_EMAIL);
+}
+
+/** Removes the account from this device (it then asks for the PIN, with a connection, to open again). */
+export async function forgetDevice(): Promise<void> {
   await fbSignOut(auth);
-  // Reload so nothing from the signed-out account stays on screen.
   window.location.reload();
 }
 
-/** Plain words for the sign-in errors Firebase reports. */
-export function signInMessage(e: unknown): string {
+/** Plain words for what Firebase reports. */
+export function pinMessage(e: unknown): string {
   const code = (e as { code?: string })?.code ?? '';
-  if (code.includes('invalid-credential') || code.includes('wrong-password') || code.includes('user-not-found') || code.includes('invalid-email'))
-    return 'The email or password is not right.';
-  if (code.includes('too-many-requests')) return 'Too many tries. Wait a few minutes and try again.';
-  if (code.includes('network')) return 'No connection. Check the internet and try again.';
-  if (code.includes('user-disabled')) return 'This account has been switched off.';
-  if (code.includes('popup-closed-by-user') || code.includes('cancelled-popup-request')) return '';
-  if (code.includes('popup-blocked') || code.includes('operation-not-supported-in-this-environment'))
-    return 'The Google window could not open here. Sign in with the email and password below.';
-  if (code.includes('admin-restricted-operation'))
-    return 'This Google account does not have access to Bake Away. Choose the Bake Away Google account, or sign in with the email and password.';
-  if (code.includes('account-exists-with-different-credential')) return 'This email already signs in another way. Use the email and password.';
-  if (code.includes('unauthorized-domain')) return 'Google sign-in is not allowed from this address yet.';
-  return 'Could not sign in. Try again.';
+  if (code.includes('invalid-credential') || code.includes('wrong-password') || code.includes('invalid-login')) return 'That PIN is not right.';
+  if (code.includes('too-many-requests')) return 'Too many wrong tries. Wait a few minutes, then try again.';
+  if (code.includes('network')) return 'No connection. The first time on a device needs the internet.';
+  if (code.includes('user-not-found') || code.includes('user-disabled')) return 'The Bake Away account is not set up. Ask Denis.';
+  if (code.includes('weak-password')) return 'Choose a PIN of 6 digits.';
+  if (code.includes('requires-recent-login')) return 'Type the current PIN again, then the new one.';
+  return 'Could not open. Try again.';
 }
 
 export function makeCloudStore(uid: string): Store {
