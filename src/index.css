@@ -1,0 +1,210 @@
+@import "tailwindcss";
+
+/* Colours taken from the Bake Away logo: frosting pink, chocolate, caramel, butter cream, cherry. */
+@theme {
+  --color-ink: #3f1f10;
+  --color-muted: #876a5c;
+  --color-faint: #b7a297;
+  --color-page: #fff9f1;
+  --color-card: #ffffff;
+  --color-line: #f0e3d7;
+  --color-pink: #e03e87;
+  --color-choc: #5b2e1b;
+  --color-caramel: #9a6344;
+  --color-butter: #e8e48b;
+  --color-butter-soft: #faf8dc;
+  --color-cherry: #c9271f;
+  --color-cherry-soft: #fdebe9;
+  --color-leaf: #257a4a;
+  --color-leaf-soft: #e5f5ec;
+  --color-amber: #a46200;
+  --color-amber-soft: #fff1d0;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* The accent follows the section: pink in Bake Away, chocolate-caramel in Hardware. */
+:root {
+  --accent: #d6307b;
+  --accent-dark: #b3225f;
+  --accent-soft: #fce8f1;
+  --accent-line: #f5c3da;
+}
+[data-section="hardware"] {
+  --accent: #8a5234;
+  --accent-dark: #6d3f27;
+  --accent-soft: #f6ece4;
+  --accent-line: #e6cfbf;
+}
+@theme inline {
+  --color-accent: var(--accent);
+  --color-accent-dark: var(--accent-dark);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-line: var(--accent-line);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  background: var(--color-page);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior: none;
+}
+#root {
+  height: 100dvh;
+}
+/* iPhone zooms the whole page when a field's text is smaller than 16px. */
+input,
+select,
+textarea {
+  font-size: 16px;
+}
+button {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+button:disabled {
+  cursor: default;
+}
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+@layer components {
+  /* Room for the iPhone notch and home bar. */
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .px-safe {
+    padding-left: max(1rem, env(safe-area-inset-left, 0px));
+    padding-right: max(1rem, env(safe-area-inset-right, 0px));
+  }
+
+  .card {
+    @apply rounded-2xl border border-line bg-card;
+  }
+  .btn {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-4 text-[15px] font-semibold transition-colors select-none disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply bg-accent text-white hover:bg-accent-dark active:bg-accent-dark;
+  }
+  .btn-soft {
+    @apply bg-accent-soft text-accent-dark hover:bg-accent-line active:bg-accent-line;
+  }
+  .btn-plain {
+    @apply border border-line bg-card text-ink hover:bg-page active:bg-page;
+  }
+  .btn-danger {
+    @apply bg-cherry-soft text-cherry hover:bg-cherry hover:text-white active:bg-cherry active:text-white;
+  }
+  .btn-sm {
+    @apply min-h-9 rounded-lg px-3 text-sm;
+  }
+  .input {
+    @apply block min-h-11 w-full rounded-xl border border-line bg-card px-3 py-2 text-ink placeholder:text-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent-line;
+  }
+  .label {
+    @apply mb-1 block text-sm font-medium text-muted;
+  }
+  .chip {
+    @apply inline-flex min-h-9 items-center gap-1.5 rounded-full border border-line bg-card px-3 text-sm font-medium text-muted whitespace-nowrap;
+  }
+  .chip-on {
+    @apply border-accent bg-accent text-white;
+  }
+  .row {
+    @apply flex w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-page active:bg-page;
+  }
+}
+
+select.input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23876a5c' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2.25rem;
+}
+/* iPhone draws date fields narrow and centred unless told otherwise. */
+input[type="date"].input,
+input[type="time"].input {
+  -webkit-appearance: none;
+  appearance: none;
+  min-width: 0;
+  text-align: left;
+}
+input[type="date"].input::-webkit-date-and-time-value {
+  text-align: left;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes sheet-up {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.sheet-panel {
+  animation: sheet-up 0.2s ease-out;
+}
+.sheet-backdrop {
+  animation: fade-in 0.15s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sheet-panel,
+  .sheet-backdrop {
+    animation: none;
+  }
+}
+
+/* The user manual */
+.manual h1 {
+  @apply mb-2 text-2xl font-semibold;
+}
+.manual h2 {
+  @apply mt-8 mb-2 border-t border-line pt-6 text-xl font-semibold text-accent-dark;
+}
+.manual h3 {
+  @apply mt-5 mb-1 text-base font-semibold;
+}
+.manual p {
+  @apply my-2 leading-relaxed;
+}
+.manual ul {
+  @apply my-2 list-disc space-y-1 pl-5;
+}
+.manual ol {
+  @apply my-2 list-decimal space-y-1 pl-5;
+}
+.manual blockquote {
+  @apply my-3 rounded-xl bg-butter-soft px-4 py-3 text-[15px];
+}
+.manual code {
+  @apply rounded bg-accent-soft px-1 text-[0.92em] text-accent-dark;
+}

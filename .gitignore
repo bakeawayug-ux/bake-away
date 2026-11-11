@@ -1,0 +1,16 @@
+node_modules/
+dist/
+dev-dist/
+*.log
+.env
+.env.*
+!.env.example
+!.env.emulator
+# Evelyn's records never go into the repo
+backups/
+*.backup.json
+# Claude Code local files
+.claude/settings.local.json
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
