@@ -1,15 +1,12 @@
 // The first page after opening the app: one card per section with its live figures.
 import { BookOpen, Boxes, CakeSlice, ChevronRight, Settings, Share, X } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { LoadNotice, SyncChip } from '../components/Layout';
 import { OrderRow } from '../components/rows';
 import { List, SectionTitle } from '../components/ui';
 import { useData } from '../data/DataContext';
-import { addDays, longToday, presetPeriod } from '../lib/dates';
-import { fmt, sum } from '../lib/money';
-import { customerLabel } from '../lib/orders';
-import { bakeReport, hardwareReport } from '../lib/reports';
+import { addDays, longToday } from '../lib/dates';
 import { SECTIONS } from '../lib/sections';
 
 function isIphoneBrowser(): boolean {
@@ -61,16 +58,19 @@ function Figure({ label, value, tone }: { label: string; value: string; tone?: s
   );
 }
 
+/**
+ * Home shows NO money: each business's figures stay inside that business (Evelyn, 11 Nov 2026:
+ * the two businesses must never appear side by side in shillings). Only counts that say what
+ * needs doing are shown here.
+ */
 export function Home() {
   const d = useData();
-  const cur = d.settings.currency;
-  const month = useMemo(() => presetPeriod('thisMonth', d.today), [d.today]);
-  const bake = useMemo(() => bakeReport(d, month, d.today, (o) => customerLabel(o, d.customersById)), [d, month]);
-  const hw = useMemo(() => hardwareReport(d, month), [d, month]);
   const week = addDays(d.today, 7);
   const open = d.orders.filter((o) => d.orderTotalsById.get(o.id)?.open).sort((a, b) => (a.dueDate < b.dueDate ? -1 : 1));
   const thisWeek = open.filter((o) => o.dueDate <= week);
   const lowCount = d.items.filter((i) => !i.archived && d.levels.get(i.id)?.low).length;
+  const lateCount = open.filter((o) => d.orderTotalsById.get(o.id)?.late).length;
+  const pinnedBake = d.notes.filter((n) => n.section === 'bake' && n.pinned && !n.done).length;
   const hour = new Date().getHours();
   const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
   const pinned = d.notes.filter((n) => n.pinned && !n.done);
@@ -107,13 +107,10 @@ export function Home() {
               <ChevronRight size={22} className="text-faint" aria-hidden />
             </div>
             <div className="mt-4 grid grid-cols-3 gap-3 border-t border-line pt-3">
-              <Figure label="Money in" value={fmt(bake.moneyIn)} tone="text-leaf" />
               <Figure label="To bake, 7 days" value={String(thisWeek.length)} />
-              <Figure label="Owed to you" value={fmt(bake.owedNow)} tone={bake.owedNow > 0 ? 'text-cherry' : ''} />
+              <Figure label="Late orders" value={String(lateCount)} tone={lateCount ? 'text-cherry' : ''} />
+              <Figure label="Pinned notes" value={String(pinnedBake)} />
             </div>
-            <p className="mt-2 text-xs text-faint">
-              {month.label}, in {cur}
-            </p>
           </Link>
 
           <Link to={SECTIONS.hardware.base} data-section="hardware" className="card block p-5 transition-colors hover:border-accent-line active:bg-accent-soft">
@@ -128,13 +125,10 @@ export function Home() {
               <ChevronRight size={22} className="text-faint" aria-hidden />
             </div>
             <div className="mt-4 grid grid-cols-3 gap-3 border-t border-line pt-3">
-              <Figure label="Sales" value={fmt(hw.sales)} tone="text-leaf" />
-              <Figure label="Stock value" value={fmt(sum(d.items, (i) => d.levels.get(i.id)?.value))} />
+              <Figure label="Items in stock" value={String(d.items.filter((i) => !i.archived).length)} />
               <Figure label="Running low" value={lowCount ? `${lowCount} item${lowCount === 1 ? '' : 's'}` : 'None'} tone={lowCount ? 'text-amber' : ''} />
+              <Figure label="Sales today" value={String(d.sales.filter((x) => x.date === d.today).length)} />
             </div>
-            <p className="mt-2 text-xs text-faint">
-              {month.label}, in {cur}
-            </p>
           </Link>
         </div>
 
@@ -143,7 +137,7 @@ export function Home() {
             <SectionTitle>To bake in the next seven days</SectionTitle>
             <List>
               {thisWeek.slice(0, 5).map((o) => (
-                <OrderRow key={o.id} order={o} />
+                <OrderRow key={o.id} order={o} hideMoney />
               ))}
             </List>
           </>

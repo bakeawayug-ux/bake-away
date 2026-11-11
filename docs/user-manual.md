@@ -16,7 +16,7 @@ The Bake Away icon now sits on the Home Screen. Opened from there it fills the s
 
 ## Finding your way
 
-- **Home** shows a card for Bake Away and a card for Hardware, with the main figures of each. Tap a card to go in.
+- **Home** shows a card for Bake Away and a card for Hardware. Tap a card to go in. Home shows **no money**, only what needs doing (orders to bake, late orders, items running low), so the two businesses' figures never sit side by side. Each business's money is inside that business.
 - On the iPhone, each section has **tabs along the bottom**, a **More** tab for the other pages, and a round **+ button** for adding things.
 - On the laptop, the pages are listed down the left, with an **Add** button at the top.
 - The small logo at the top left always takes you back to Home.
@@ -180,6 +180,7 @@ If this phone used the app before the PIN, open **Settings > Your records** and 
 
 ## What's new
 
+- 11 November 2026: **Home shows no money** any more, only what needs doing. Each business's figures are inside that business.
 - 11 November 2026: a **PDF report** for each business, kept separate: Bake Away's report never shows the shop, and the shop's report never shows Bake Away.
 - 11 November 2026: the Bake Away cupcake now sits faintly in the background, and a soft glow shows where you tap.
 - 11 November 2026: the app now opens with a **6-digit PIN** only. Google and email sign-in were removed.

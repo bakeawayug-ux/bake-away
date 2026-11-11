@@ -20,7 +20,7 @@ export function DateBlock({ date, late }: { date: string; late?: boolean }) {
   );
 }
 
-export function OrderRow({ order }: { order: Order }) {
+export function OrderRow({ order, hideMoney }: { order: Order; hideMoney?: boolean }) {
   const d = useData();
   const sheets = useSheets();
   const t = d.orderTotalsById.get(order.id);
@@ -33,14 +33,16 @@ export function OrderRow({ order }: { order: Order }) {
         <span className="block truncate text-sm text-muted">{itemsText(order) || order.number}</span>
         <span className="mt-1 flex flex-wrap items-center gap-1.5">
           <Badge tone={t.late ? 'red' : stageTone(order.stage)}>{t.late ? `Late · ${order.stage}` : order.stage}</Badge>
-          {order.stage !== 'Cancelled' && <Badge tone={payTone(t.payStatus)}>{t.payStatus}</Badge>}
+          {order.stage !== 'Cancelled' && !hideMoney && <Badge tone={payTone(t.payStatus)}>{t.payStatus}</Badge>}
           {t.open && !t.late && <span className="text-xs text-muted">{relativeDay(order.dueDate, d.today)}{order.dueTime ? `, ${order.dueTime}` : ''}</span>}
         </span>
       </span>
-      <span className="shrink-0 text-right">
-        <span className="num block font-semibold">{money(t.value, d.settings.currency)}</span>
-        {t.balance > 0 && <span className="num block text-xs font-medium text-cherry">owes {shortMoney(t.balance)}</span>}
-      </span>
+      {!hideMoney && (
+        <span className="shrink-0 text-right">
+          <span className="num block font-semibold">{money(t.value, d.settings.currency)}</span>
+          {t.balance > 0 && <span className="num block text-xs font-medium text-cherry">owes {shortMoney(t.balance)}</span>}
+        </span>
+      )}
     </button>
   );
 }
