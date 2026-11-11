@@ -47,14 +47,24 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean
 
 function UpdateBanner() {
   const [apply, setApply] = useState<(() => void) | null>(null);
+  const [updating, setUpdating] = useState(false);
   useEffect(() => onUpdateReady((fn) => setApply(() => fn)), []);
   if (!apply) return null;
   return (
-    <div className="fixed inset-x-0 bottom-[calc(5rem+env(safe-area-inset-bottom,0px))] z-40 flex justify-center px-4 md:bottom-6">
+    // z-[85]: above windows and the PIN screen, below the short notices
+    <div className="fixed inset-x-0 bottom-[calc(5rem+env(safe-area-inset-bottom,0px))] z-[85] flex justify-center px-4 md:bottom-6">
       <div className="flex items-center gap-3 rounded-2xl bg-choc py-2 pr-2 pl-4 text-sm font-medium text-white shadow-xl">
-        A new version is ready
-        <button type="button" className="btn btn-sm bg-white text-choc" onClick={apply}>
-          Update
+        {updating ? 'Updating, one moment…' : 'A new version is ready'}
+        <button
+          type="button"
+          className="btn btn-sm min-h-11 bg-white px-4 text-choc"
+          disabled={updating}
+          onClick={() => {
+            setUpdating(true);
+            apply();
+          }}
+        >
+          {updating ? 'Updating…' : 'Update'}
         </button>
       </div>
     </div>

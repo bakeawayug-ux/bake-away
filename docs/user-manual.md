@@ -182,6 +182,7 @@ If this phone used the app before the PIN, open **Settings > Your records** and 
 
 ## What's new
 
+- 11 November 2026: the **Update** button now works on the iPhone. It says "Updating…" and the app reopens on the new version within a few seconds. (If an older copy's Update button does nothing, close the app fully by swiping it away, then open it again.)
 - 11 November 2026: **Back** on Settings and the User manual, and **Contents** at the top of the manual.
 - 11 November 2026: **Home shows no money** any more, only what needs doing. Each business's figures are inside that business.
 - 11 November 2026: a **PDF report** for each business, kept separate: Bake Away's report never shows the shop, and the shop's report never shows Bake Away.
