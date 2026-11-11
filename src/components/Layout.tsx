@@ -1,11 +1,11 @@
 // The frame around every page inside a section.
 // Laptop: a sidebar with the section's pages. iPhone: a top bar, bottom tabs and a + button,
 // all kept clear of the notch and the home bar.
-import { ArrowLeftRight, BookOpen, Cloud, CloudOff, Ellipsis, House, Plus, RefreshCw, Settings, Smartphone } from 'lucide-react';
+import { ArrowLeftRight, BookOpen, ChevronLeft, Cloud, CloudOff, Ellipsis, House, Plus, RefreshCw, Settings, Smartphone } from 'lucide-react';
 import { useEffect, type ReactNode } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useData, type SyncState } from '../data/DataContext';
-import { SECTIONS, activeItem, rememberSection } from '../lib/sections';
+import { SECTIONS, activeItem, lastSection, rememberSection } from '../lib/sections';
 import type { Section } from '../lib/types';
 import { useSheets } from './SheetHost';
 import { Button, cx } from './ui';
@@ -179,20 +179,32 @@ export function Layout({ section, children }: { section: Section; children: Reac
   );
 }
 
-/** For the pages outside a section (Settings, User manual): a simple top bar with a way back. */
+/**
+ * For the pages outside a section (Settings, User manual): a top bar with Back (to the page you
+ * came from) and Home. Opened directly, with nothing to go back to, Back goes to the last section used.
+ */
 export function PlainLayout({ title, children }: { title: string; children: ReactNode }) {
-  const { pathname } = useLocation();
+  const location = useLocation();
+  const navigate = useNavigate();
   useEffect(() => {
     document.getElementById('page-scroll')?.scrollTo(0, 0);
-  }, [pathname]);
+  }, [location.pathname]);
+  const back = () => {
+    if (location.key !== 'default') navigate(-1);
+    else navigate(SECTIONS[lastSection()].base);
+  };
   return (
     <div className="flex h-full flex-col">
       <header className="pt-safe border-b border-line bg-card">
-        <div className="px-safe mx-auto flex h-12 w-full max-w-3xl items-center gap-2 md:px-8">
-          <Link to="/" className="flex items-center gap-2 font-semibold text-accent-dark" aria-label="Back to Home">
-            <House size={18} aria-hidden /> Home
+        <div className="px-safe mx-auto flex h-12 w-full max-w-3xl items-center gap-1 md:px-8">
+          <button type="button" onClick={back} className="-ml-2 flex min-h-11 items-center gap-1 rounded-lg pr-2 pl-1 font-semibold text-accent-dark active:bg-accent-soft" aria-label="Back">
+            <ChevronLeft size={22} aria-hidden /> Back
+          </button>
+          <span className="min-w-0 flex-1 truncate text-center font-semibold">{title}</span>
+          <Link to="/" className="flex min-h-11 items-center gap-1.5 rounded-lg px-2 font-medium text-muted active:bg-line" aria-label="Home">
+            <House size={18} aria-hidden />
+            <span className="hidden sm:inline">Home</span>
           </Link>
-          <span className="flex-1 truncate text-center font-semibold">{title}</span>
           <SyncChip short />
         </div>
       </header>

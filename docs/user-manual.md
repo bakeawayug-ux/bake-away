@@ -1,6 +1,6 @@
 # Bake Away user manual
 
-Last updated: 11 November 2026 (PDF reports)
+Last updated: 11 November 2026 (Back and Contents)
 
 This app keeps the records of two businesses in one place: **Bake Away** (orders, customers, baking costs, profit) and **Hardware** (stock, sales, money invested). It works on the iPhone like an app and on a laptop in the browser.
 
@@ -20,6 +20,8 @@ The Bake Away icon now sits on the Home Screen. Opened from there it fills the s
 - On the iPhone, each section has **tabs along the bottom**, a **More** tab for the other pages, and a round **+ button** for adding things.
 - On the laptop, the pages are listed down the left, with an **Add** button at the top.
 - The small logo at the top left always takes you back to Home.
+- **Settings** and this **User manual** have **Back** at the top left, which returns to the page you came from, and a small house that goes to Home.
+- This manual opens with its **Contents**: tap a chapter, or one of its parts, to jump straight to it. Once you scroll down, a **Contents** button at the bottom right takes you back to the list.
 - **More** also has **Switch to Hardware** / **Switch to Bake Away**, **Settings** and this manual.
 
 ## Bake Away
@@ -136,13 +138,13 @@ If you sell more than the records show in stock, the app warns you but still sav
 - **Where the shop stands today**: stock value, what customers owe you, what you owe suppliers, your money invested.
 - **Best sellers** and expenses by kind, and files to download.
 
+> How cost is worked out: an item's cost is the **average** of everything you have ever bought of it. Stock value is the number in stock times that average.
+
 ### PDF report
 
 **More > PDF report** makes a report of **the hardware shop only**. It never shows anything from Bake Away. Choose the period and what to include, look through the preview, then **Share PDF** (on the iPhone) or **Download PDF** (on a laptop).
 
 The report has: money in (what customers paid), money out (paid to suppliers and expenses), profit, stock value; the profit worked out step by step; cash in and out, with your own money put in or taken out shown apart; how customers paid; expenses by kind; best sellers; where the shop stands today; stock running low; customers who owe you and suppliers you owe; and the months.
-
-> How cost is worked out: an item's cost is the **average** of everything you have ever bought of it. Stock value is the number in stock times that average.
 
 ## Settings
 
@@ -180,6 +182,7 @@ If this phone used the app before the PIN, open **Settings > Your records** and 
 
 ## What's new
 
+- 11 November 2026: **Back** on Settings and the User manual, and **Contents** at the top of the manual.
 - 11 November 2026: **Home shows no money** any more, only what needs doing. Each business's figures are inside that business.
 - 11 November 2026: a **PDF report** for each business, kept separate: Bake Away's report never shows the shop, and the shop's report never shows Bake Away.
 - 11 November 2026: the Bake Away cupcake now sits faintly in the background, and a soft glow shows where you tap.
