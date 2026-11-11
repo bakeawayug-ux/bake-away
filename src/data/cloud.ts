@@ -5,9 +5,11 @@ import { initializeApp } from 'firebase/app';
 import {
   connectAuthEmulator,
   getAuth,
+  GoogleAuthProvider,
   onAuthStateChanged,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut as fbSignOut,
   type User,
 } from 'firebase/auth';
@@ -54,6 +56,23 @@ export async function signIn(email: string, password: string): Promise<void> {
   await signInWithEmailAndPassword(auth, email.trim(), password);
 }
 
+/**
+ * Google sign-in, by pop-up only. The app (github.io) and Firebase's sign-in helper
+ * (firebaseapp.com) are on different addresses; the "go to Google's page and come back" method
+ * loses its result there because browsers, iPhone Safari most of all, wall off storage between
+ * addresses (checked 11 Nov 2026: it came back signed out). The pop-up hands the result straight
+ * back, so it works across addresses. If it cannot open, the sign-in page says so and the email
+ * and password still work.
+ * Only accounts that already exist can sign in (sign-up is switched off in Firebase), so another
+ * Google account is refused rather than given an empty account. A Google account with the same
+ * Gmail as an existing account opens that same account and its records.
+ */
+export async function signInWithGoogle(): Promise<void> {
+  const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: 'select_account' });
+  await signInWithPopup(auth, provider);
+}
+
 export async function resetPassword(email: string): Promise<void> {
   await sendPasswordResetEmail(auth, email.trim());
 }
@@ -72,6 +91,13 @@ export function signInMessage(e: unknown): string {
   if (code.includes('too-many-requests')) return 'Too many tries. Wait a few minutes and try again.';
   if (code.includes('network')) return 'No connection. Check the internet and try again.';
   if (code.includes('user-disabled')) return 'This account has been switched off.';
+  if (code.includes('popup-closed-by-user') || code.includes('cancelled-popup-request')) return '';
+  if (code.includes('popup-blocked') || code.includes('operation-not-supported-in-this-environment'))
+    return 'The Google window could not open here. Sign in with the email and password below.';
+  if (code.includes('admin-restricted-operation'))
+    return 'This Google account does not have access to Bake Away. Choose the Bake Away Google account, or sign in with the email and password.';
+  if (code.includes('account-exists-with-different-credential')) return 'This email already signs in another way. Use the email and password.';
+  if (code.includes('unauthorized-domain')) return 'Google sign-in is not allowed from this address yet.';
   return 'Could not sign in. Try again.';
 }
 

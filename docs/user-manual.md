@@ -1,6 +1,6 @@
 # Bake Away user manual
 
-Last updated: 11 November 2026 (sign-in and shared records)
+Last updated: 11 November 2026 (Google sign-in)
 
 This app keeps the records of two businesses in one place: **Bake Away** (orders, customers, baking costs, profit) and **Hardware** (stock, sales, money invested). It works on the iPhone like an app and on a laptop in the browser.
 
@@ -135,7 +135,16 @@ If you sell more than the records show in stock, the app warns you but still sav
 
 ## Signing in and where your records are kept
 
-The app opens on a **Sign in** page. Use the email and password set up for you. Once signed in, it stays signed in on that phone or laptop until you choose **Settings > Sign out**.
+The app opens on a **Sign in** page. There are two ways in:
+
+- **Continue with Google**: tap it and choose the **Bake Away Google account** (bakeawayug@gmail.com) in the Google window. Other Google accounts are refused.
+- **Email and password**: the ones set up for you, then **Sign in with email**.
+
+Once signed in, it stays signed in on that phone or laptop until you choose **Settings > Sign out**.
+
+> After the first sign-in with Google, use Google from then on. Google takes over that email, so the old password may stop working. To have a password again, type the email on the Sign in page and tap **Forgot password**.
+
+> If the Google window does not open (some phones block it inside a Home Screen app), the page says so: sign in with the email and password instead.
 
 - Your records are kept in your own account in the cloud. The **same records show on every device** you sign in on: save an order on the iPhone and it is on the laptop a moment later.
 - **No signal?** Keep working. The line at the top of Home says "No connection: changes wait on this device", and the changes are sent by themselves when the connection returns.
@@ -147,5 +156,6 @@ The app opens on a **Sign in** page. Use the email and password set up for you. 
 
 ## What's new
 
+- 11 November 2026: **Continue with Google** on the Sign in page.
 - 11 November 2026: sign-in, and the same records on the iPhone and the laptop.
 - 11 November 2026: first version. Bake Away (orders, customers, expenses by ingredient, products, profit and reports, notes) and Hardware (stock, sales, stock in, money invested, reports).
